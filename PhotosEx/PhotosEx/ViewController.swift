@@ -120,6 +120,18 @@ class ViewController: UIViewController, UITableViewDataSource,UITableViewDelegat
     }
     
     
+    //세그를 통해서 데이터를 전달하는 방법 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let nextViewController:imageZoomViewController = segue.destination as? imageZoomViewController else {return}
+        guard let cell:UITableViewCell = sender as? UITableViewCell else {return}
+        guard let index: IndexPath = self.tableView.indexPath(for:cell) else {return}
+        
+        nextViewController.asset = self.fetchResult[index.row]
+        
+
+    }
+    
+    
     
 }
 

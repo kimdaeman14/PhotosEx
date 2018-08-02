@@ -7,29 +7,33 @@
 //
 
 import UIKit
+import Photos
 
-class imageZoomViewController: UIViewController {
+class imageZoomViewController: UIViewController, UIScrollViewDelegate {
 
+    var asset: PHAsset!
+    let imageManager: PHCachingImageManager = PHCachingImageManager() //얘로이미지요청
+    
+    @IBOutlet weak var imageView:UIImageView!
+    
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        return self.imageView
+    }
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //에셋에서 이미지를 호출해달라.
+        imageManager.requestImage(for: asset, targetSize: CGSize(width: asset.pixelWidth, height: asset.pixelHeight), contentMode: .aspectFill, options: nil) { image, _ in
+            self.imageView.image = image
+        }
 
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
+    
+  
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
+   
 
 }
